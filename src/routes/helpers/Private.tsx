@@ -1,7 +1,24 @@
-import React from 'react';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import UiPaths from '../../paths/uiPaths';
 
-const Private = () => {
-  return <div>Private</div>;
-};
+interface IAllowedRoles {
+  allowedRoles: string[];
+}
 
-export default Private;
+export default function Private({ allowedRoles }: IAllowedRoles) {
+  const userRole = ['admin'];
+
+  const location = useLocation();
+
+  const isvalid = allowedRoles.some((role: string) => userRole.includes(role));
+
+  if (isvalid) return <Outlet />;
+
+  return (
+    <Navigate
+      to={UiPaths.NotFound}
+      state={{ pathname: location.pathname }}
+      replace
+    />
+  );
+}
