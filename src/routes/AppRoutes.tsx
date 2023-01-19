@@ -9,7 +9,7 @@ const AllowedPage = lazy(() => import('../pages/AllowedPage'));
 const NotFoundPage = lazy(() => import('../pages/NotFound'));
 
 const AppRoutes = () => {
-  const loggedIn = false;
+  const loggedIn = true;
 
   if (loggedIn) {
     return (
