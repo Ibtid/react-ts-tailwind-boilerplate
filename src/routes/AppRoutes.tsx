@@ -9,31 +9,38 @@ const AllowedPage = lazy(() => import('../pages/AllowedPage'));
 const NotFoundPage = lazy(() => import('../pages/NotFound'));
 
 const AppRoutes = () => {
-  const loggedIn = true;
+  const loggedIn = false;
 
-  return (
-    <Routes>
-      <Route
-        index
-        element={
-          <Navigate to={loggedIn ? UiPaths.AllowedPage : UiPaths.Login} />
-        }
-      />
+  if (loggedIn) {
+    return (
+      <Routes>
+        <Route index element={<Navigate to={UiPaths.AllowedPage} />} />
 
-      <Route path={UiPaths.Login} element={<LoginPage />} />
-      <Route path={UiPaths.Register} element={<RegisterPage />} />
-      <Route path={UiPaths.AllowedPage} element={<AllowedPage />} />
+        <Route path={UiPaths.Login} element={<LoginPage />} />
+        <Route path={UiPaths.Register} element={<RegisterPage />} />
+        <Route path={UiPaths.AllowedPage} element={<AllowedPage />} />
 
-      <Route element={<Private allowedRoles={['admin', 'customer']} />}>
-        <Route path={UiPaths.RestrictedPage} element={<RestrictedPage />} />
-        {/* <Route
+        <Route element={<Private allowedRoles={['admin', 'customer']} />}>
+          <Route path={UiPaths.RestrictedPage} element={<RestrictedPage />} />
+          {/* <Route
           path={`${UiPaths.Companies}/:companyId`}
           element={<CompanyDetailsPage />}
         /> */}
-      </Route>
-      <Route path='*' element={<NotFoundPage />} />
-    </Routes>
-  );
+        </Route>
+        <Route path='*' element={<NotFoundPage />} />
+      </Routes>
+    );
+  } else {
+    return (
+      <Routes>
+        <Route index element={<Navigate to={UiPaths.Login} />} />
+
+        <Route path={UiPaths.Login} element={<LoginPage />} />
+        <Route path={UiPaths.Register} element={<RegisterPage />} />
+        <Route path='*' element={<NotFoundPage />} />
+      </Routes>
+    );
+  }
 };
 
 export default AppRoutes;

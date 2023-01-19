@@ -6,7 +6,7 @@ interface IAllowedRoles {
 }
 
 export default function Private({ allowedRoles }: IAllowedRoles) {
-  const userRole = ['admin'];
+  const userRole: string[] = ['admin'];
 
   const location = useLocation();
 
